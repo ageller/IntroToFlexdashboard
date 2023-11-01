@@ -5,9 +5,7 @@ The files in this workshop require the following R libraries:
 ```
 flexdashboard
 shiny
-knitr
 kableExtra
-dplyr
 ggplot2
 plotly
 ```
