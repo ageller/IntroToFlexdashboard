@@ -1,0 +1,148 @@
+---
+title: "Flexdashboard mtcars example"
+runtime: shiny
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    source_code: embed
+    theme:
+      version: 4
+      bootswatch: darkly
+
+
+---
+
+```{r global}
+library(flexdashboard)
+
+data(mtcars)
+```
+
+```{r}
+# https://cran.r-project.org/web/packages/explore/vignettes/explore_mtcars.html
+column_meaning <- list(
+    mpg = 'Miles/(US) gallon',
+    cyl = 'Number of cylinders',
+    disp = 'Displacement (cu.in.)',
+    hp = 'Gross horsepower',
+    drat = 'Rear axle ratio',
+    wt = 'Weight (lb/1000)',
+    qsec = '1/4 mile time',
+    vs	= 'Engine type (0 = V, 1 = straight)',
+    am = 'Transmission (0 = automatic, 1 = manual)',
+    gear = 'Number of forward gears',
+    carb = 'Number of carburetors'
+)
+
+create_df <- function(row, col) {
+    df <- data.frame(matrix(nrow = 1, ncol = 3))
+    names(df) <- c("value", "max")
+    df$value <- mtcars[row,col]
+    df$max <- max(mtcars[col])
+
+    return(df)
+}
+
+create_gauge <- function(row, col){
+    df <- create_df(row, col)
+    g <- gauge(
+        df$value, min = 0, max = df$max, 
+        sectors = gaugeSectors(
+            success = c(0, df$max*0.33),
+            warning = c(df$max*0.33, df$max*0.67),
+            danger = c(df$max*0.67, df$max),
+            colors = c("#ff0097","#ffa600",  "#036c9c")
+        )
+    )  
+    return(g)
+
+}
+
+```
+
+
+
+Plots
+=====================================  
+
+Row {data-height=100}
+------------------------------------- 
+
+### Miles/(US) gallon
+```{r}
+renderGauge({
+  create_gauge(1, 'mpg')
+})
+```
+
+### Number of cylinders
+```{r}
+renderGauge({
+  create_gauge(1, 'cyl')
+})
+
+```
+   
+### Displacement (cu.in.)
+```{r}
+renderGauge({
+  create_gauge(1, 'disp')
+})
+```   
+
+
+
+
+
+Row {data-height=100}
+------------------------------------- 
+
+### Gross horsepower
+```{r}
+renderGauge({
+  create_gauge(1, 'hp')
+})
+```
+
+### Rear axle ratio
+```{r}
+renderGauge({
+  create_gauge(1, 'drat')
+})
+```
+   
+### Weight (lb/1000)
+```{r}
+renderGauge({
+  create_gauge(1, 'wt')
+})
+```   
+
+
+
+
+Row {data-height=100}
+-------------------------------------
+
+### 1/4 mile time 
+```{r}
+renderGauge({
+  create_gauge(1, 'qsec')
+})
+```
+
+### Number of forward gears 
+```{r}
+renderGauge({
+  create_gauge(1, 'gear')
+})
+```
+   
+### Number of carburetors
+```{r}
+renderGauge({
+  create_gauge(1, 'carb')
+})
+```   
+
