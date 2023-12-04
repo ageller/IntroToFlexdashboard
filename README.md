@@ -1,5 +1,5 @@
 # Intro To flexdashboard
-An introductory workshop for R + [flexdashboard](https://pkgs.rstudio.com/flexdashboard/), including interactive components.
+[Flexdashboard](https://pkgs.rstudio.com/flexdashboard/) is an open-source R library that uses R Markdown to simplify the creation of dashboards.  In this workshop you will learn how to create a dashboard with interactive elements using flexdashboard and other R libraries.  
 
 The files in this workshop require the following R libraries:
 ```
